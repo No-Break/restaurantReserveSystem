@@ -16,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 class RestaurantControllerTest {
@@ -59,6 +60,18 @@ class RestaurantControllerTest {
                 MockMvcRequestBuilders.get("/restaurants/1004"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Kimchi")));
+
+    }
+
+    @Test
+    public void create() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/restaurants"))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("location", "/restaurants/1234"))
+                .andExpect(content().string("{}"));
+
+        verify(restaurantService).addRestaurant(any());
 
     }
 

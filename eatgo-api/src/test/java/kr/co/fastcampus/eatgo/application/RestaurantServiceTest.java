@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 class RestaurantServiceTest {
@@ -68,4 +69,17 @@ class RestaurantServiceTest {
 
         assertThat(restaurantList.get(0).getId()).isEqualTo(1004L);
     }
+
+    @Test
+    public void addRestaurant() {
+        Restaurant restaurant = new Restaurant("BeRyong", "Busan");
+        Restaurant saved = new Restaurant(1234L, "BeRyong", "Busan");
+
+        given(restaurantRepository.save(any())).willReturn(saved);
+
+        Restaurant created = restaurantService.addRestaurant(restaurant);
+
+        assertThat(created.getId()).isEqualTo(1234L);
+    }
+
 }

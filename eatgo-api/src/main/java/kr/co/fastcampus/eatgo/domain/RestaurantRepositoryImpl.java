@@ -29,4 +29,9 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
             .orElse(null);
 
     }
+
+    @Override
+    public Restaurant save(Restaurant restaurant) {
+        return null;
+    }
 }
