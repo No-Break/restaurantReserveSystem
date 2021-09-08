@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -40,7 +41,11 @@ class RestaurantControllerTest {
     @Test
     public void list() throws Exception {
         List<Restaurant> restaurants = new ArrayList<>();
-        restaurants.add(new Restaurant(1004L, "Wonos", "Daegu"));
+        restaurants.add(Restaurant.builder()
+                .id(1004L)
+                .name("Wonos")
+                .address("Daegu")
+                .build());
 
         given(restaurantService.getRestaurants()).willReturn(restaurants);
 
@@ -52,10 +57,26 @@ class RestaurantControllerTest {
 
     @Test
     public void detail() throws Exception {
-        Restaurant restaurant = new Restaurant(1004L, "Wonos", "Daegu");
-        restaurant.addMenuItem(new MenuItem("Kimchi"));
+
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("Wonos")
+                .address("Daegu")
+                .build();
+        MenuItem menuItem = MenuItem.builder()
+                .name("Kimchi")
+                .build();
+        restaurant.setMenuItems(Arrays.asList(menuItem));
+
+
+        Restaurant restaurant2 = Restaurant.builder()
+                .id(2020L)
+                .name("Cyber Food")
+                .address("Seoul")
+                .build();
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
+        given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/restaurants/1004"))

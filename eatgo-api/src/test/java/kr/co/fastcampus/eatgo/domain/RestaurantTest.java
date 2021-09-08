@@ -10,13 +10,21 @@ class RestaurantTest {
 
     @Test
     public void creation() {
-        Restaurant restaurant = new Restaurant(1004L,"wonos", "");
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("bob")
+                .address("Seoul")
+                .build();
         assertThat(restaurant.getName()).isEqualTo("bob");
     }
 
     @Test
     public void information() {
-        Restaurant restaurant = new Restaurant(1004L,"wonos", "Daegu");
+        Restaurant restaurant = Restaurant.builder()
+                .id(1004L)
+                .name("wonos")
+                .address("Daegu")
+                .build();
         assertThat(restaurant.getInformation()).isEqualTo("wonos in Daegu");
 
     }
