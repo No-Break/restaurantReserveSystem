@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -51,7 +52,7 @@ public class RestaurantController {
     }
 
     @PatchMapping("/restaurants/{id}")
-    public String update(@PathVariable("id") Long id, @RequestBody Restaurant resource) {
+    public String update(@PathVariable("id") Long id, @Valid @RequestBody Restaurant resource) {
         String name = resource.getName();
         String address = resource.getAddress();
         restaurantService.updateRestaurant(id, name, address);
