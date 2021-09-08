@@ -60,7 +60,7 @@ class RestaurantServiceTest {
     }
 
     @Test
-    public void getRestaurant() {
+    public void getRestaurantWithExisted() {
 
         Restaurant restaurant = restaurantService.getRestaurant(1004L);
 
@@ -70,6 +70,7 @@ class RestaurantServiceTest {
 
         assertThat(menuItem.getName()).isEqualTo("Kimchi");
     }
+
 
     @Test
     public void getRestaurants() {
