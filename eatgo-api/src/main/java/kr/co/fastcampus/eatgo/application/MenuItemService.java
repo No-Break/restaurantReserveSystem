@@ -17,10 +17,18 @@ public class MenuItemService {
 
     public void bulkUpdate(Long restaurantId, List<MenuItem> menuItemList) {
         for (MenuItem menuItem : menuItemList) {
-            menuItem.setRestaurantId(restaurantId);
-            menuItemRepositroy.save(menuItem);
+            update(restaurantId, menuItem);
         }
-        //Todo bulk update
+
+    }
+
+    private void update(Long restaurantId, MenuItem menuItem) {
+        if (menuItem.isDestory()) {
+            menuItemRepositroy.deleteById(menuItem.getId());
+            return;
+        }
+        menuItem.setRestaurantId(restaurantId);
+        menuItemRepositroy.save(menuItem);
     }
 }
 
